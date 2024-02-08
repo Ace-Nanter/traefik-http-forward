@@ -6,7 +6,7 @@ const port = process.env.PORT || 8000;
 
 app.get('/', (req: Request, res: Response) => {
   const PORT = process.env.PORT || 3000;
-  const SERVICE_NAME = process.env.SERVICE_NAME || 'external-vps';
+  const SERVICE_NAME = process.env.SERVICE_NAME || 'remote-traefik';
 
   const response: TraefikResponse = {
     http: {
