@@ -8,14 +8,11 @@
     "url": "https://github.com/Ace-Nanter/traefik-http-forward.git"
   },
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "start": "nodemon --exec \"npm run dev\"",
+    "start:prod": "node dist/index.js",
+    "lint": "eslint \"src/**/*.ts\" --fix"
   },
   "author": "Ace Nanter",
   "license": "MIT",
