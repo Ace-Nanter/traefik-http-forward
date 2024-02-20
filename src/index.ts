@@ -24,32 +24,38 @@ process.env.ENTRYPOINTS_MAPPING.split(';').forEach((pair) => {
 export const app: Application = express();
 
 app.get('/', async (req: Request, res: ExpressResponse) => {
-  const routerMap = await fetch(`${API_ADDRESS}/http/routers`)
+  return fetch(`${API_ADDRESS}/http/routers`)
     .then(fetchStatus)
     .then((response) => response.json())
-    .then((json) => reduceRouters((json as TraefikAPIRouter[]).filter(filterRouters)));
+    .then((json) => {
+      const routerMap = reduceRouters((json as TraefikAPIRouter[]).filter(filterRouters));
 
-  // Create response to return
-  const response: TraefikResponse = {
-    http: {
-      routers: routerMap,
-      services: {
-        [SERVICE_NAME]: {
-          loadBalancer: {
-            passHostHeader: true,
-            servers: [
-              {
-                url: DESTINATION_ADDRESS,
+      // Create response to return
+      const response: TraefikResponse = {
+        http: {
+          routers: routerMap,
+          services: {
+            [SERVICE_NAME]: {
+              loadBalancer: {
+                passHostHeader: true,
+                servers: [
+                  {
+                    url: DESTINATION_ADDRESS,
+                  },
+                ],
               },
-            ],
+            },
           },
         },
-      },
-    },
-  };
+      };
 
-  res.setHeader('Content-Type', 'application/json');
-  res.send(response);
+      res.setHeader('Content-Type', 'application/json');
+      res.send(response);
+    })
+    .catch((error) => {
+      res.status(500);
+      res.send(error);
+    });
 });
 
 app.listen(PORT, () => {
