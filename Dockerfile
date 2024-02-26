@@ -13,4 +13,4 @@ RUN npm install --production
 COPY dist ./
 
 # Start application
-CMD node main.js
+CMD node index.js
