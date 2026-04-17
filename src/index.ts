@@ -7,7 +7,7 @@ const PORT = process.env.PORT ? Number.parseInt(process.env.PORT) : 3000;
 const SERVICE_NAME = process.env.SERVICE_NAME || 'remote-traefik';
 
 if (!process.env.API_ADDRESS || !process.env.DESTINATION_ADDRESS || !process.env.ENTRYPOINTS_MAPPING) {
-  throw new Error('Incorrect configuration');
+  throw new Error('Missing env variables');
 }
 
 const API_ADDRESS = process.env.API_ADDRESS;

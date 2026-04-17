@@ -1,16 +1,25 @@
-FROM node:20
+FROM node:24-alpine AS build
 
-# Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
+RUN corepack enable
 
-RUN npm install --production
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
-# Bundle app source
-COPY dist ./
+COPY tsconfig.json tsconfig.build.json ./
+COPY src ./src
 
-# Start application
-CMD node index.js
+RUN pnpm build && pnpm prune --prod
+
+FROM node:24-alpine
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+EXPOSE 3000
+
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+
+CMD ["dist/index.js"]

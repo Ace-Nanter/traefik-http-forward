@@ -23,9 +23,58 @@ Docker Swarm typically requires at least three servers to function correctly.
 
 ![Illustration of a Scenario Where the Project’s Web Service Could Be Utilized](https://github.com/Ace-Nanter/traefik-http-forward/blob/main/docs/schema.drawio.svg)
 
+## Prerequisites
+
+- Node.js 24+
+- pnpm 10+
+- Docker (optional)
+
+## Local development
+
+Install dependencies:
+
+```bash
+pnpm install
+```
+
+Run the application in development mode:
+
+```bash
+pnpm dev
+```
+
+Run the watcher used for local startup:
+
+```bash
+pnpm start
+```
+
+Build the project:
+
+```bash
+pnpm build
+```
+
+Run the linter:
+
+```bash
+pnpm lint
+```
+
+Run the compiled application locally:
+
+```bash
+pnpm start:prod
+```
+
 ## How to use
 
-- Build Docker image
+- Build Docker image:
+
+```bash
+docker build -t traefik-http-forward .
+```
+
 - Run Docker image with the following environment variables set:
   - `API_ADDRESS`: (Mandatory) The URL of the remote Traefik instance's API.
   - `DESTINATION_ADDRESS`: (Mandatory) The URL provided for the service which will point to the remote Traefik instance.
