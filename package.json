@@ -17,6 +17,15 @@
   },
   "author": "Ace Nanter",
   "license": "MIT",
+  "pnpm": {
+    "overrides": {
+      "body-parser": "1.20.6",
+      "qs": "6.16.0",
+      "js-yaml": "4.3.2",
+      "brace-expansion@1": "1.1.16",
+      "brace-expansion@5": "5.0.7"
+    }
+  },
   "dependencies": {
     "express": "^4.22.1"
   },
